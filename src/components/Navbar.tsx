@@ -48,7 +48,7 @@ const Navbar = () => {
     <>
       <div className="header">
         <div className="navbar-left">
-          <a href="/#" className="navbar-title" data-cursor="disable">
+          <a href={`${import.meta.env.BASE_URL}`} className="navbar-title" data-cursor="disable">
             {profile.initials}
           </a>
           <div className="navbar-social">

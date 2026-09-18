@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MdClose, MdDownload } from "react-icons/md";
+import { smoother } from "./Navbar";
 import "./styles/ResumeModal.css";
 
 const resumePath = `${import.meta.env.BASE_URL}Sarthak_Patel_Master_Resume.pdf`;
@@ -13,8 +15,16 @@ const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      if (smoother) smoother.paused(true);
     } else {
       document.body.style.overflow = "";
+      if (smoother) {
+        smoother.paused(false);
+        smoother.scrollTop(0);
+        setTimeout(() => {
+          ScrollTrigger.refresh(true);
+        }, 100);
+      }
     }
     return () => {
       document.body.style.overflow = "";
