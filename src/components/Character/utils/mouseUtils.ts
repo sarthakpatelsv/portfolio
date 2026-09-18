@@ -1,5 +1,11 @@
 import * as THREE from "three";
 
+export const isMobileDevice = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) || window.innerWidth <= 1024;
+};
+
 export const handleMouseMove = (
   event: MouseEvent,
   setMousePosition: (x: number, y: number) => void
@@ -32,6 +38,33 @@ export const handleTouchEnd = (
       setMousePosition(0, 0, 0.1, 0.2);
     }, 1000);
   }, 2000);
+};
+
+export const requestGyroPermission = async (): Promise<boolean> => {
+  if (
+    typeof (DeviceOrientationEvent as any).requestPermission === "function"
+  ) {
+    try {
+      const permission = await (
+        DeviceOrientationEvent as any
+      ).requestPermission();
+      return permission === "granted";
+    } catch {
+      return false;
+    }
+  }
+  return true;
+};
+
+export const handleDeviceOrientation = (
+  event: DeviceOrientationEvent,
+  setMousePosition: (x: number, y: number) => void
+) => {
+  const gamma = event.gamma || 0;
+  const beta = event.beta || 0;
+  const mouseX = THREE.MathUtils.clamp(gamma / 45, -1, 1);
+  const mouseY = THREE.MathUtils.clamp((beta - 45) / 45, -1, 1);
+  setMousePosition(mouseX, mouseY);
 };
 
 export const handleHeadRotation = (
