@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MdClose, MdDownload } from "react-icons/md";
-import { smoother } from "./Navbar";
 import "./styles/ResumeModal.css";
 
 const resumePath = `${import.meta.env.BASE_URL}Sarthak_Patel_Master_Resume.pdf`;
@@ -13,21 +12,35 @@ type ResumeModalProps = {
 
 const ResumeModal = ({ isOpen, onClose }: ResumeModalProps) => {
   useEffect(() => {
+    const smoothWrapper = document.getElementById("smooth-wrapper");
+    const smoothContent = document.getElementById("smooth-content");
+
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      if (smoother) smoother.paused(true);
-    } else {
-      document.body.style.overflow = "";
-      if (smoother) {
-        smoother.paused(false);
-        smoother.scrollTop(0);
-        setTimeout(() => {
-          ScrollTrigger.refresh(true);
-        }, 100);
+      if (smoothWrapper) {
+        smoothWrapper.style.overflow = "hidden";
       }
+      if (smoothContent) {
+        smoothContent.style.transform = "none";
+      }
+    } else {
+      if (smoothWrapper) {
+        smoothWrapper.style.overflow = "";
+      }
+      if (smoothContent) {
+        smoothContent.style.transform = "";
+      }
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh(true);
+      });
     }
+
     return () => {
-      document.body.style.overflow = "";
+      if (smoothWrapper) {
+        smoothWrapper.style.overflow = "";
+      }
+      if (smoothContent) {
+        smoothContent.style.transform = "";
+      }
     };
   }, [isOpen]);
 
