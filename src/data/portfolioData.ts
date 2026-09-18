@@ -88,27 +88,88 @@ export const serviceCards = [
   },
 ] as const;
 
-type ProjectCard = {
-  title: string;
-  category: string;
-  tools: string;
-};
-
-export const projectCards: ProjectCard[] = [
+export const projectCategories = [
   {
-    title: "Scout AI / Scout_Content_OS",
-    category: "Personal AI Platform",
-    tools: "Python, FastAPI, Next.js, TypeScript, Ollama, Qwen 3.5, REST APIs",
+    name: "Software, AI & Web Development",
+    projects: [
+      {
+        title: "Scout AI / Scout_Content_OS",
+        category: "Local-First AI Content Platform",
+        tools: "Python, FastAPI, Next.js, TypeScript, Ollama (Qwen 3.5), REST APIs, Tailwind CSS",
+        description: "Architected a local-first content automation platform connecting Next.js dashboards and FastAPI microservices with local LLM execution environments. Features automated execution pipelines, prompt logic, and output validation.",
+      },
+      {
+        title: "CurvyGirlExchange / Plus Closet",
+        category: "Algonquin College Capstone Client Project (Team of 4)",
+        tools: "Python, MySQL, Supabase, AI/ML, REST APIs, 3D Avatar Modeling",
+        description: "Built backend recommendation logic for personalized sizing predictions and integrated 3D avatar body-modeling features according to client specs.",
+      },
+      {
+        title: "Legion Remote",
+        category: "Systems & Remote Access Utility",
+        tools: "Python, Windows OS, Tailscale, Ngrok, Localtunnel, REST APIs",
+        description: "Developed a custom remote access utility for Windows environments. Configured local service endpoints, port connectivity, and secure tunneling endpoints for remote system interaction.",
+      },
+      {
+        title: "FairShare",
+        category: "Expense-Sharing Web Application",
+        tools: "PHP, MySQL (PDO), JavaScript, HTML/CSS",
+        description: "Developed a group expense-sharing platform featuring receipt photo uploads, group access code authentication, and dynamic expense splitting logic.",
+      },
+      {
+        title: "Online Bookstore Project",
+        category: "Database Systems Project",
+        tools: "SQL Server, T-SQL, Database Design",
+        description: "Designed and implemented a relational database schema for an online bookstore featuring custom query pipelines for search, reviews, and user recommendations.",
+      },
+    ],
   },
   {
-    title: "CurvyGirlExchange / Plus Closet",
-    category: "Client Project — Team of 4",
-    tools: "Python, MySQL, Supabase, AI/ML, REST APIs, 3D Modeling",
-  },
-  {
-    title: "Legion Remote",
-    category: "Personal System Project",
-    tools: "Python, Windows OS, REST APIs, Tailscale, Ngrok, Git",
+    name: "IoT, Robotics & Embedded Systems",
+    projects: [
+      {
+        title: "Smart Safety Helmet Prototype",
+        category: "IoT Safety Device",
+        tools: "Arduino Uno, MQ-2 Gas/Smoke Sensor, Buzzer, LEDs, Embedded C/C++",
+        description: "Built a mine worker safety helmet prototype that detects toxic gas/smoke levels. Triggers an audible alarm and toggles visual indicator LEDs from green to flashing red upon threshold breach.",
+      },
+      {
+        title: "\"Honk More, Wait More\" Smart Traffic Light",
+        category: "Smart Traffic Control System",
+        tools: "Arduino, Sound/Noise Sensors, Traffic Control Logic",
+        description: "Prototype traffic light system designed to discourage unnecessary honking. Uses sound sensors to measure ambient noise; exceeding noise thresholds automatically penalizes drivers by extending red light timers by 60 seconds.",
+      },
+      {
+        title: "Otto-Style Bipedal Walking & Dancing Robot",
+        category: "Autonomous Robotics",
+        tools: "Arduino Uno, Servo Motors, Ultrasonic Sensor, PLA 3D Printing, C++",
+        description: "3D-printed and programmed an autonomous bipedal robot capable of walking, dancing, and moonwalking moves while using ultrasonic sensors for real-time obstacle avoidance.",
+      },
+      {
+        title: "RFID-Based Attendance System",
+        category: "Hardware Attendance Logging",
+        tools: "Arduino Mini, RFID Reader Module, LCD Display, RFID Tags",
+        description: "Hardware attendance logging device that reads RFID tag IDs, verifies credentials, and displays real-time attendance verification status on an LCD screen.",
+      },
+      {
+        title: "Assistive Blind Stick",
+        category: "Assistive Technology Device",
+        tools: "Arduino Nano, Ultrasonic Sensor, Buzzer",
+        description: "Assistive hardware device designed to detect obstacles up to 3 meters away and alert visually impaired users via real-time variable audio cues.",
+      },
+      {
+        title: "Wireless ECG Monitoring System",
+        category: "Remote Health Telemetry",
+        tools: "Wireless Communication Modules, Microcontroller, Sensor Integration",
+        description: "Developed to capture patient ECG data remotely and transmit health metrics across the internet to healthcare providers with 80% telemetry accuracy.",
+      },
+      {
+        title: "Custom Functional 3D Printer Build",
+        category: "Hardware Fabrication Project",
+        tools: "RAMPS 1.4, Arduino Mega, Stepper Motors, Thermal Sensors",
+        description: "Built a functional 3D printer hardware rig from scratch using Arduino Mega and RAMPS 1.4 controller boards, reaching 70% operational accuracy in physical part generation.",
+      },
+    ],
   },
 ] as const;
 
