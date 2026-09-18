@@ -46,7 +46,7 @@ const Navbar = () => {
         <a href="/#" className="navbar-title" data-cursor="disable">
           {profile.initials}
         </a>
-        <span className="navbar-desktop-hint">Open on desktop for the full experience</span>
+        <span className="navbar-desktop-hint">Open on desktop for the amazing experience</span>
         <a
           href={profile.linkedinHref}
           className="navbar-connect"
