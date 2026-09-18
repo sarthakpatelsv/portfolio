@@ -1,11 +1,5 @@
 import * as THREE from "three";
 
-export const isMobileDevice = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  ) || window.innerWidth <= 1024;
-};
-
 export const handleMouseMove = (
   event: MouseEvent,
   setMousePosition: (x: number, y: number) => void
@@ -60,6 +54,7 @@ export const handleDeviceOrientation = (
   event: DeviceOrientationEvent,
   setMousePosition: (x: number, y: number) => void
 ) => {
+  if (event.gamma === null && event.beta === null) return;
   const gamma = event.gamma || 0;
   const beta = event.beta || 0;
   const mouseX = THREE.MathUtils.clamp(gamma / 45, -1, 1);

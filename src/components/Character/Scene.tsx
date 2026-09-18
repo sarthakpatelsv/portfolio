@@ -11,7 +11,6 @@ import {
   handleTouchMove,
   handleDeviceOrientation,
   requestGyroPermission,
-  isMobileDevice,
 } from "./utils/mouseUtils";
 import setAnimations from "./utils/animationUtils";
 import { setProgress } from "../Loading";
@@ -132,12 +131,47 @@ const Scene = () => {
 
     let mouse = { x: 0, y: 0 };
     let interpolation = { x: 0.1, y: 0.2 };
-    let gyroEnabled = false;
+    let gyroActive = false;
+
+    const onDeviceOrientation = (event: DeviceOrientationEvent) => {
+      if (gyroActive) {
+        handleDeviceOrientation(event, (x, y) => {
+          mouse = { x, y };
+        });
+      }
+    };
+
+    const enableGyro = async () => {
+      if (gyroActive) return;
+      const granted = await requestGyroPermission();
+      if (granted) {
+        gyroActive = true;
+        window.addEventListener("deviceorientation", onDeviceOrientation);
+        document.removeEventListener("touchstart", enableGyro);
+      }
+    };
+
+    const isIOSSafari =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+      !(window as any).MSStream;
+
+    if (isIOSSafari) {
+      document.addEventListener("touchstart", enableGyro, { once: true });
+    } else if (window.DeviceOrientationEvent) {
+      window.addEventListener("deviceorientation", (event) => {
+        if (event.gamma !== null && !gyroActive) {
+          gyroActive = true;
+          window.addEventListener("deviceorientation", onDeviceOrientation);
+        }
+      }, { once: true });
+    }
 
     const touchMoveHandler = (event: TouchEvent) => {
-      handleTouchMove(event, (x, y) => {
-        mouse = { x, y };
-      });
+      if (!gyroActive) {
+        handleTouchMove(event, (x, y) => {
+          mouse = { x, y };
+        });
+      }
     };
 
     const onMouseMove = (event: MouseEvent) => {
@@ -154,24 +188,11 @@ const Scene = () => {
     };
 
     const onTouchEnd = () => {
-      handleTouchEnd((x, y, interpolationX, interpolationY) => {
-        mouse = { x, y };
-        interpolation = { x: interpolationX, y: interpolationY };
-      });
-    };
-
-    const onDeviceOrientation = (event: DeviceOrientationEvent) => {
-      handleDeviceOrientation(event, (x, y) => {
-        mouse = { x, y };
-      });
-    };
-
-    const initGyro = async () => {
-      if (gyroEnabled || !isMobileDevice()) return;
-      const granted = await requestGyroPermission();
-      if (granted) {
-        gyroEnabled = true;
-        window.addEventListener("deviceorientation", onDeviceOrientation);
+      if (!gyroActive) {
+        handleTouchEnd((x, y, interpolationX, interpolationY) => {
+          mouse = { x, y };
+          interpolation = { x: interpolationX, y: interpolationY };
+        });
       }
     };
 
@@ -188,9 +209,6 @@ const Scene = () => {
     if (landingDiv) {
       landingDiv.addEventListener("touchstart", onTouchStart);
       landingDiv.addEventListener("touchend", onTouchEnd);
-      if (isMobileDevice()) {
-        landingDiv.addEventListener("touchstart", initGyro, { once: true });
-      }
     }
 
     const animate = () => {
@@ -228,12 +246,12 @@ const Scene = () => {
       document.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("resize", onResize);
       window.removeEventListener("deviceorientation", onDeviceOrientation);
+      document.removeEventListener("touchstart", enableGyro);
 
       if (landingDiv) {
         landingDiv.removeEventListener("touchstart", onTouchStart);
         landingDiv.removeEventListener("touchend", onTouchEnd);
         landingDiv.removeEventListener("touchmove", touchMoveHandler);
-        landingDiv.removeEventListener("touchstart", initGyro);
       }
 
       scene.clear();
