@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import "./styles/Navbar.css";
 import { profile } from "../data/portfolioData";
 import ResumeModal from "./ResumeModal";
@@ -46,19 +47,20 @@ const Navbar = () => {
   return (
     <>
       <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          {profile.initials}
-        </a>
+        <div className="navbar-left">
+          <a href="/#" className="navbar-title" data-cursor="disable">
+            {profile.initials}
+          </a>
+          <div className="navbar-social">
+            <a href={profile.githubHref} target="_blank" rel="noreferrer" data-cursor="disable">
+              <FaGithub />
+            </a>
+            <a href={profile.linkedinHref} target="_blank" rel="noreferrer" data-cursor="disable">
+              <FaLinkedinIn />
+            </a>
+          </div>
+        </div>
         <span className="navbar-desktop-hint">Open on desktop for the amazing experience</span>
-        <a
-          href={profile.linkedinHref}
-          className="navbar-connect"
-          data-cursor="disable"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {profile.linkedinLabel}
-        </a>
         <ul>
           <li>
             <a data-href="#about" href="#about">

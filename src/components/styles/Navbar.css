@@ -30,21 +30,49 @@
   font-weight: 600;
   cursor: pointer;
 }
-.navbar-connect {
-  position: absolute;
-  display: none;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 15px;
-  letter-spacing: 1px;
-  font-weight: 500;
+
+/* ── Left side: Initials + Social Icons ── */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .navbar-title {
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
 }
+.navbar-social {
+  display: none;
+  align-items: center;
+  gap: 8px;
+}
+.navbar-social a {
+  color: #999;
+  font-size: 14px;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+.navbar-social a:hover {
+  color: var(--accentColor);
+}
+
+/* ── Mobile hint ── */
+.navbar-desktop-hint {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: rgba(245, 155, 248, 0.6);
+  white-space: nowrap;
+  font-weight: 400;
+}
+
+/* ── Resume Button ── */
 .navbar-resume-btn {
   background: rgba(245, 155, 248, 0.08);
   border: 1px solid rgba(245, 155, 248, 0.2);
@@ -63,18 +91,8 @@
   border-color: var(--accentColor);
   box-shadow: 0 0 12px rgba(245, 155, 248, 0.15);
 }
-.navbar-desktop-hint {
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 10px;
-  letter-spacing: 0.5px;
-  color: rgba(245, 155, 248, 0.6);
-  white-space: nowrap;
-  font-weight: 400;
-}
+
+/* ── Responsive ── */
 @media only screen and (min-width: 500px) {
   .header {
     padding: 20px 0px;
@@ -99,8 +117,11 @@
   }
 }
 @media only screen and (min-width: 900px) {
-  .navbar-connect {
-    display: block;
+  .navbar-social {
+    display: flex;
+  }
+  .navbar-social a {
+    font-size: 16px;
   }
 }
 @media only screen and (min-width: 1200px) {
@@ -111,10 +132,10 @@
     column-gap: 80px;
     font-size: 16px;
   }
-  .navbar-connect {
-    font-size: 16px;
-  }
   .navbar-title {
+    font-size: 18px;
+  }
+  .navbar-social a {
     font-size: 18px;
   }
 }
